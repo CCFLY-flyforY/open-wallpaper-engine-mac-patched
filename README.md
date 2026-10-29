@@ -7,6 +7,40 @@ Open Wallpaper Engine (Patched)
 
 A patched fork of [Open Wallpaper Engine](https://github.com/MrWindDog/wallpaper-engine-mac) for macOS, adding scene wallpaper rendering and web wallpaper fixes.
 
+## ✅ Runs on Intel Macs (x86_64)
+
+**This is the reason this fork exists.** The macOS builds of this project that circulate online are
+**arm64-only**, and an Intel Mac refuses them outright:
+
+```
+$ open wallpaper-engine-mac.app
+Bad CPU type in executable
+```
+
+This fork is built and tested as **x86_64 on a real Intel Mac** (Core i9-9980HK, macOS 26.6.2):
+scene wallpapers render and animate, video and web wallpapers play, Steam Workshop import works.
+
+**Build it yourself — no Xcode, no signing team, ~2 minutes:**
+
+```sh
+git clone https://github.com/CCFLY-flyforY/open-wallpaper-engine-mac-patched
+cd open-wallpaper-engine-mac-patched
+./scripts/build-intel.sh          # -> ~/Desktop/Open-Wallpaper-Engine-x86_64.app
+```
+
+It only needs the Command Line Tools (`xcode-select --install`). The script compiles 71 Swift files
+plus one Objective-C file with `swiftc`, assembles the bundle, and ad-hoc signs it.
+
+| | Prebuilt builds online | This fork |
+| --- | --- | --- |
+| Architecture | arm64 only | **x86_64 (Intel)** |
+| Needs Xcode to build | yes | **no, Command Line Tools only** |
+| Needs a signing team | yes | **no, ad-hoc** |
+
+Two permission prompts appear on first launch: **Desktop folder access** (wallpapers are stored
+there) and — only for audio-reactive scene wallpapers — **System Audio Recording**. Each rebuild
+asks again, because the ad-hoc signature changes the app identity.
+
 > **Note:** This is NOT affiliated with the commercial Wallpaper Engine on Steam. This is an open-source macOS app that can display wallpaper assets from Wallpaper Engine's Steam Workshop.
 
 > **Fork notice:** This repository is a further fork of [Unayung/wallpaper-engine-mac](https://github.com/Unayung/wallpaper-engine-mac)
